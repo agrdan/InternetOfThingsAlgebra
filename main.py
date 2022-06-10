@@ -10,7 +10,7 @@ class App(tk.Tk):
 
     def __init__(self):
         super().__init__()
-        self.geometry("700x900")
+        self.geometry("1500x900")
         self.title("IoT Portal")
 
         self.container = ttk.Frame(self)
