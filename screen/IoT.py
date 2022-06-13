@@ -10,6 +10,8 @@ from threading import Thread
 from time import sleep as delay
 from utils.JSONSerializator import JSONSerializator
 from datetime import datetime as dt
+import base64
+from io import BytesIO
 
 class MessageHandler(Thread):
 
@@ -27,6 +29,13 @@ class MessageHandler(Thread):
                 toPrint = f"temperatura: {model.temperature}\n" \
                           f"pressure: {model.pressure}\n" \
                           f"humidity: {model.humidity}"
+                image = None
+                if image is None:
+                    try:
+                        image = Image.open(BytesIO(base64.b64decode(model.image)))
+                        image.show()
+                    except Exception as e:
+                        image = None
                 self.messageBox.config(state=tk.NORMAL)
                 messageToPrint = f"\n<{dt.now()}>\n[{topic}]: \n{toPrint}"
                 self.messageBox.insert(tk.END, messageToPrint + "\n")
